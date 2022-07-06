@@ -1,20 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import SignUp from './src/screens/SignUp';
+import Login from './src/screens/Login';
+import { AppRegistry, Platform } from 'react-native';
+import { registerRootComponent } from 'expo';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+/* Taildwind css */
+import { color } from 'react-native-tailwindcss';
+
+const navigator = createStackNavigator(
+  { SignUp, Login },
+  {
+    initialRouteName: 'SignUp',
+    defaultNavigationOptions: {
+      title: 'PlantulApp',
+      headerTintColor: color.white,
+      headerTitleAllowFontScaling: true,
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerStyle: {
+        backgroundColor: color.green400,
+      },
+      cardStyle: {
+        backgroundColor: color.white,
+      },
+    },
+  }
+);
+
+const App = createAppContainer(navigator);
+
+if (Platform.OS == 'android') {
+  // registerRootComponent(App);
+  AppRegistry.registerComponent('plantulapp', () => App);
+} else {
+  AppRegistry.registerComponent('plantulapp', () => App);
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
